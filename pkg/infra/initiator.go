@@ -22,14 +22,14 @@ func StartCreateProposal(num int, burst int, r float64, config Config, crypto *C
 	for i := 0; i < num; i++ {
 		k := rand.Intn(10000000000)
 		key := fmt.Sprintf("%032d%032d", k, num)
-		config.Args = append(config.Args, key)
-		config.Args = append(config.Args, value)
+		addKey := append(config.Args, key)
+		addKey = append(addKey, value)
 		prop, err := CreateProposal(
 			crypto,
 			config.Channel,
 			config.Chaincode,
 			config.Version,
-			config.Args...,
+			addKey...,
 		)
 		if err != nil {
 			errorCh <- errors.Wrapf(err, "error creating proposal")
